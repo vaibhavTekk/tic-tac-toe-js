@@ -8,7 +8,7 @@ class TicTacToe {
         this.winner = ''
     }
     
-    update(location , turn){
+    update(location){
         if (this.grid[location] === ''){
             this.grid[location] = this.turn;
             this.turnCount += 1;
@@ -25,24 +25,28 @@ class TicTacToe {
         }
     }
 
-    // checkWin(){
-    //     const winstates = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[1,2,7],[2,4,6],[0,3,6],[1,4,7],[2,5,8]];
-    //     winstates.every((e) => {
-    //         let a = this.grid[e[0]];
-    //         let b = this.grid[e[1]];
-    //         let c = this.grid[e[2]];
-    //         if (a && b && c){
-    //             if (a === b === c){
-    //                 this.winner = a;
-    //                 this.state = 'win';
-    //                 return false;
-    //             } else if (this.isGridFull()) {
-    //                 this.state = 'draw';
-    //                 return false;
-    //             }
-    //         }
-    //     });
-    // }
+    checkWin(){
+        const winstates = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[1,2,7],[2,4,6],[0,3,6],[1,4,7],[2,5,8]];
+        for (let i=0;i < winstates.length ; i++){
+            const condition = winstates[i];
+            //console.log(condition);
+            let a = this.grid[condition[0]];
+            let b = this.grid[condition[1]];
+            let c = this.grid[condition[2]];
+            if (a !== '' && b !== '' && c !== ''){
+                if (a === b && b===c && c===a){
+                    this.winner = a;
+                } else if (this.isGridFull()) {
+                    this.winner = 'Draw';
+                    break;
+                } else {
+                    this.winner = '';
+                    continue;
+                }
+            }
+        }
+        return this.winner;
+    }
 
     isGridFull(){
         return !(this.grid.includes(''));
