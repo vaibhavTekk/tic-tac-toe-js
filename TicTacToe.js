@@ -33,15 +33,16 @@ class TicTacToe {
             let a = this.grid[condition[0]];
             let b = this.grid[condition[1]];
             let c = this.grid[condition[2]];
+            console.log(condition);
             if (a !== '' && b !== '' && c !== ''){
-                if (a === b && b===c && c===a){
+                if (a === b && b === c && c === a){
                     this.winner = a;
+                    break;
                 } else if (this.isGridFull()) {
                     this.winner = 'Draw';
                     break;
                 } else {
                     this.winner = '';
-                    continue;
                 }
             }
         }

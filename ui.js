@@ -8,6 +8,17 @@ const player2 = document.querySelector('.player2');
 
 const game = new TicTacToe();
 
+let volume = 0.8;
+
+
+const playsound = function(id){
+    link = `./sounds/${id}.wav`;
+    const audio = document.createElement('audio');
+    audio.src = link;
+    audio.volume = volume;
+    audio.play();
+};
+
 grid.addEventListener('click' , (e) => {
     if (e.target.nodeName == 'LI' || e.target.parentNode.nodeName == 'LI'){
         const location = e.target.id || e.target.parentNode.id ;
@@ -15,9 +26,11 @@ grid.addEventListener('click' , (e) => {
         try {
             game.update(location);
             updateUI(location,game.turn);
+            handlewin(game.checkWin());
+            playsound('click');
             game.changeTurn();
             updateIndicators(game.turn);
-            handlewin(game.checkWin());
+            
         } catch (error) {
             console.log(error);
             // error handling here
@@ -85,15 +98,18 @@ const stopGame = () => {
 const displayOverlay = (win) => {
     let text = '';
     if (win == 'X'){
-        text = 'Player 1 Wins ! 🏆';
+        text = 'Player 1 Wins! 🏆';
+        playsound('win');
     } else if (win == 'O'){
-        text='Player 2 Wins ! 🏆';
+        text='Player 2 Wins! 🏆';
+        playsound('win');
     } else {
-        text= "It's a Draw !";
+        text= "It's a Tie! 🪢";
+        playsound('error');
     }
     winner.innerText = text;
     console.log(winner);
     overlay.classList.remove("hidden");
     overlay.classList.add("flex");
-    
+    overlay.classList.replace("opacity-0","opacity-100"); 
 };
