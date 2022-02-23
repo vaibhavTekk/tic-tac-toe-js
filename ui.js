@@ -26,11 +26,10 @@ grid.addEventListener('click' , (e) => {
         try {
             game.update(location);
             updateUI(location,game.turn);
-            handlewin(game.checkWin());
             playsound('click');
             game.changeTurn();
+            handlewin(game.checkWin());
             updateIndicators(game.turn);
-            
         } catch (error) {
             console.log(error);
             // error handling here
@@ -84,6 +83,8 @@ const handlewin = (win) => {
     } else if (win === 'Draw'){
         displayOverlay(win);
         stopGame();
+    } else {
+        win = game.checkWin();
     }
 
 }
@@ -103,10 +104,10 @@ const displayOverlay = (win) => {
     } else if (win == 'O'){
         text='Player 2 Wins! 🏆';
         playsound('win');
-    } else {
+    } else if (win == 'Draw'){
         text= "It's a Tie! 🪢";
         playsound('error');
-    }
+    } 
     winner.innerText = text;
     console.log(winner);
     overlay.classList.remove("hidden");

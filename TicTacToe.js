@@ -27,6 +27,7 @@ class TicTacToe {
 
     checkWin(){
         const winstates = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[1,2,7],[2,4,6],[0,3,6],[1,4,7],[2,5,8]];
+        let roundwin = false;
         for (let i=0;i < winstates.length ; i++){
             const condition = winstates[i];
             //console.log(condition);
@@ -34,19 +35,24 @@ class TicTacToe {
             let b = this.grid[condition[1]];
             let c = this.grid[condition[2]];
             console.log(condition);
-            if (a !== '' && b !== '' && c !== ''){
-                if (a === b && b === c && c === a){
-                    this.winner = a;
-                    break;
-                } else if (this.isGridFull()) {
-                    this.winner = 'Draw';
-                    break;
-                } else {
-                    this.winner = '';
-                }
+            if (a === '' || b === '' || c === ''){
+                continue;
             }
+            if (a === b && b === c){
+                this.winner = a;
+                roundwin = true;
+                break;
+            } 
         }
-        return this.winner;
+
+        if (roundwin){
+            return this.winner;
+        }
+        
+        if (this.isGridFull()){
+            this.winner = 'Draw';
+            return this.winner;
+        }
     }
 
     isGridFull(){
